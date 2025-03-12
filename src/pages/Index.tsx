@@ -4,12 +4,23 @@ import Sidebar from "@/components/Sidebar";
 import FileUpload from "@/components/FileUpload";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import AnalysisVisualizations from "@/components/AnalysisVisualizations";
 
 const Index = () => {
   const [transcript, setTranscript] = useState("");
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [showResults, setShowResults] = useState(false);
 
   const handleAnalyze = () => {
-    // Handle analysis logic here
+    if (!transcript.trim()) return;
+    
+    setIsAnalyzing(true);
+    // Simulate API call for analysis
+    setTimeout(() => {
+      setIsAnalyzing(false);
+      setShowResults(true);
+    }, 1500);
+    
     console.log("Analyzing:", transcript);
   };
 
@@ -38,10 +49,15 @@ const Index = () => {
             <Button
               onClick={handleAnalyze}
               className="bg-primary hover:bg-primary-hover text-white px-8"
+              disabled={isAnalyzing || !transcript.trim()}
             >
-              Analyze Conversation
+              {isAnalyzing ? "Analyzing..." : "Analyze Conversation"}
             </Button>
           </div>
+
+          {showResults && (
+            <AnalysisVisualizations isLoading={isAnalyzing} />
+          )}
         </div>
       </main>
     </div>
