@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import { Textarea } from "@/components/ui/textarea";
@@ -6,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Paperclip } from "lucide-react";
 import AnalysisVisualizations from "@/components/AnalysisVisualizations";
 import { toast } from "sonner";
+import RealtimeRecording from "@/components/RealtimeRecording";
 
 const Index = () => {
   const [transcript, setTranscript] = useState("");
@@ -15,23 +15,19 @@ const Index = () => {
   const [files, setFiles] = useState<File[]>([]);
 
   const handleAnalyze = () => {
-    // Check if there's either transcript text or files to analyze
     if (!transcript.trim() && files.length === 0) return;
     
     setIsAnalyzing(true);
     
-    // Simulate API call for analysis
     setTimeout(() => {
       setIsAnalyzing(false);
       setShowResults(true);
       
-      // Show toast notification that analysis is complete
       toast.success("Analysis complete", {
         description: `Analyzed ${transcript.trim() ? "transcript" : ""} ${transcript.trim() && files.length > 0 ? "and " : ""} ${files.length > 0 ? `${files.length} file(s)` : ""}`,
       });
     }, 1500);
     
-    // Log what's being analyzed
     if (transcript.trim()) {
       console.log("Analyzing transcript:", transcript);
     }
@@ -69,6 +65,10 @@ const Index = () => {
     setFiles((prev) => prev.filter((_, index) => index !== indexToRemove));
   };
 
+  const handleTranscriptUpdate = (text: string) => {
+    setTranscript(prev => prev + "\n" + text);
+  };
+
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <Sidebar />
@@ -79,20 +79,19 @@ const Index = () => {
               Sales Playbook Coach
             </h1>
             <p className="text-lg text-gray-600 max-w-2xl">
-              Upload your sales calls or enter transcripts for real-time guidance and analysis
+              Upload your sales calls or enable real-time conversation analysis for instant guidance
             </p>
           </div>
 
-          <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 p-8 space-y-4 transition-all hover:shadow-xl">
-            <h2 className="text-xl font-semibold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-              Transcript Analysis
-            </h2>
-            <div 
-              className="relative"
-              onDragOver={handleDragOver}
-              onDragLeave={handleDragLeave}
-              onDrop={handleDrop}
-            >
+          <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 p-8 space-y-6 transition-all hover:shadow-xl">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-semibold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                Conversation Analysis
+              </h2>
+              <RealtimeRecording onTranscriptUpdate={handleTranscriptUpdate} />
+            </div>
+            
+            <div className="relative" onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop}>
               {isDragging && (
                 <div className="absolute inset-0 border-2 border-dashed border-primary/50 bg-primary/5 rounded-lg flex items-center justify-center z-10">
                   <p className="text-primary/70 text-lg font-medium">Drop files here to add to chat</p>
@@ -102,7 +101,7 @@ const Index = () => {
                 <Textarea
                   value={transcript}
                   onChange={(e) => setTranscript(e.target.value)}
-                  placeholder="Paste your conversation transcript here..."
+                  placeholder="Paste your conversation transcript here or start recording..."
                   className="min-h-[200px] text-gray-700 bg-white/50 backdrop-blur-sm border-gray-200/50 focus:border-primary/30 transition-all resize-none pr-10"
                 />
                 <label className="absolute right-3 top-3 cursor-pointer text-gray-400 hover:text-primary transition-colors">
@@ -116,12 +115,13 @@ const Index = () => {
                 </label>
               </div>
             </div>
+
             {files.length > 0 && (
               <div className="space-y-2">
                 {files.map((file, index) => (
                   <div
                     key={index}
-                    className="flex items-center space-x-3 p-2 bg-gray-50 rounded-lg text-sm text-gray-600"
+                    className="flex items-center space-x-3 p-2 bg-gray-50 rounded-lg text-sm text-gray-600 hover:bg-gray-100/80 transition-all"
                   >
                     <Paperclip className="h-4 w-4 text-gray-400" />
                     <span className="flex-1 truncate">{file.name}</span>
@@ -138,9 +138,10 @@ const Index = () => {
                 ))}
               </div>
             )}
+
             <Button
               onClick={handleAnalyze}
-              className="bg-primary hover:bg-primary/90 text-white px-8 shadow-lg hover:shadow-xl transition-all duration-300"
+              className="relative overflow-hidden bg-primary hover:bg-primary/90 text-white px-8 shadow-lg hover:shadow-xl transition-all duration-300 group"
               disabled={isAnalyzing || (!transcript.trim() && files.length === 0)}
             >
               {isAnalyzing ? (
@@ -149,7 +150,9 @@ const Index = () => {
                   Analyzing...
                 </span>
               ) : (
-                "Analyze Conversation"
+                <span className="flex items-center gap-2 group-hover:scale-105 transition-transform">
+                  Analyze Conversation
+                </span>
               )}
             </Button>
           </div>
