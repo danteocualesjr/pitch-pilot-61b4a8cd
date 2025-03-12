@@ -60,27 +60,27 @@ const RealtimeRecording = ({ onTranscriptUpdate }: RealtimeRecordingProps) => {
         variant={isRecording ? "destructive" : "default"}
         className={`relative group transition-all duration-300 ${
           isRecording 
-            ? "bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 shadow-lg shadow-red-500/30" 
-            : "bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 shadow-lg shadow-indigo-500/20"
+            ? "bg-primary/90 hover:bg-primary text-white shadow-lg shadow-primary/20" 
+            : "bg-primary/80 hover:bg-primary text-white shadow-lg shadow-primary/20"
         }`}
       >
         {isRecording ? (
           <>
             <MicOff className="mr-2 h-4 w-4" />
             Stop Recording
-            <AudioLines className="absolute -right-2 -top-2 text-rose-200 animate-pulse" />
+            <AudioLines className="absolute -right-2 -top-2 text-white/80 animate-pulse" />
           </>
         ) : (
           <>
             <Mic className="mr-2 h-4 w-4" />
             <span>Start Recording</span>
-            <Sparkles className="absolute -right-2 -top-2 text-purple-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300" size={16} />
+            <Sparkles className="absolute -right-2 -top-2 text-white/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300" size={16} />
           </>
         )}
       </Button>
       {isRecording && (
-        <div className="flex items-center gap-2 text-sm text-primary/70 animate-pulse bg-gradient-to-r from-rose-500 to-red-600 bg-clip-text text-transparent font-medium">
-          <AudioLines className="h-4 w-4 text-rose-500" />
+        <div className="flex items-center gap-2 text-sm text-primary animate-pulse font-medium">
+          <AudioLines className="h-4 w-4 text-primary" />
           Listening...
         </div>
       )}
