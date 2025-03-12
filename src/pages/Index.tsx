@@ -71,23 +71,23 @@ const Index = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-slate-100">
+    <div className="flex min-h-screen bg-[#222222]">
       <Sidebar />
       <main className="flex-1 p-8">
         <div className="max-w-4xl mx-auto space-y-8 animate-fade-in">
           <div className="text-center md:text-left">
-            <h1 className="text-4xl font-bold text-primary mb-3">
+            <h1 className="text-4xl font-bold text-white mb-3">
               Sales Playbook Coach
             </h1>
-            <p className="text-lg text-gray-600 max-w-2xl">
+            <p className="text-lg text-gray-400 max-w-2xl">
               Upload your sales calls or enable real-time conversation analysis for instant guidance
             </p>
           </div>
 
-          <div className="bg-white/70 backdrop-blur-md rounded-xl shadow-xl border border-gray-100/50 p-8 space-y-6 transition-all hover:shadow-2xl hover:bg-white/80">
+          <div className="bg-[#1A1F2C]/90 backdrop-blur-md rounded-xl shadow-xl border border-gray-800/50 p-8 space-y-6 transition-all hover:shadow-2xl">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-semibold text-primary flex items-center">
-                <Zap size={20} className="mr-2 text-primary" />
+              <h2 className="text-xl font-semibold text-white flex items-center">
+                <Zap size={20} className="mr-2 text-gray-400" />
                 Conversation Analysis
               </h2>
               <RealtimeRecording onTranscriptUpdate={handleTranscriptUpdate} />
@@ -107,9 +107,9 @@ const Index = () => {
                   value={transcript}
                   onChange={(e) => setTranscript(e.target.value)}
                   placeholder="Paste your conversation transcript here or start recording..."
-                  className="min-h-[200px] text-gray-700 bg-white/50 backdrop-blur-sm border-indigo-100 focus:border-indigo-300 transition-all resize-none pr-10 rounded-xl shadow-inner"
+                  className="min-h-[200px] text-gray-300 bg-[#403E43]/50 backdrop-blur-sm border-gray-700 focus:border-gray-600 transition-all resize-none pr-10 rounded-xl shadow-inner placeholder:text-gray-600"
                 />
-                <label className="absolute right-3 top-3 cursor-pointer text-gray-400 hover:text-indigo-500 transition-colors group-hover:scale-110 transform duration-200">
+                <label className="absolute right-3 top-3 cursor-pointer text-gray-600 hover:text-gray-400 transition-colors group-hover:scale-110 transform duration-200">
                   <Paperclip className="h-5 w-5" />
                   <input
                     type="file"
@@ -126,16 +126,16 @@ const Index = () => {
                 {files.map((file, index) => (
                   <div
                     key={index}
-                    className="flex items-center space-x-3 p-3 bg-indigo-50/80 rounded-lg text-sm text-gray-700 hover:bg-indigo-100/80 transition-all border border-indigo-100/50"
+                    className="flex items-center space-x-3 p-3 bg-[#403E43]/50 rounded-lg text-sm text-gray-300 hover:bg-[#403E43]/70 transition-all border border-gray-700/50"
                   >
-                    <Paperclip className="h-4 w-4 text-indigo-400" />
+                    <Paperclip className="h-4 w-4 text-gray-400" />
                     <span className="flex-1 truncate font-medium">{file.name}</span>
-                    <span className="text-indigo-400 bg-indigo-100 px-2 py-0.5 rounded-full text-xs">
+                    <span className="text-gray-400 bg-gray-800/50 px-2 py-0.5 rounded-full text-xs">
                       {(file.size / 1024 / 1024).toFixed(2)} MB
                     </span>
                     <button 
                       onClick={() => handleRemoveFile(index)}
-                      className="text-indigo-400 hover:text-rose-500 transition-colors p-1 rounded-full hover:bg-rose-50"
+                      className="text-gray-400 hover:text-red-400 transition-colors p-1 rounded-full hover:bg-gray-800/50"
                     >
                       ×
                     </button>
@@ -146,7 +146,7 @@ const Index = () => {
 
             <Button
               onClick={handleAnalyze}
-              className="relative overflow-hidden bg-primary hover:bg-primary/90 text-white px-8 py-6 shadow-lg hover:shadow-xl transition-all duration-300 group rounded-xl w-full md:w-auto"
+              className="relative overflow-hidden bg-[#403E43] hover:bg-[#403E43]/80 text-white px-8 py-6 shadow-lg hover:shadow-xl transition-all duration-300 group rounded-xl w-full md:w-auto border border-gray-700/50"
               disabled={isAnalyzing || (!transcript.trim() && files.length === 0)}
             >
               {isAnalyzing ? (

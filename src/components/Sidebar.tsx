@@ -16,22 +16,22 @@ const Sidebar = () => {
   return (
     <div
       className={cn(
-        "h-screen bg-white/80 backdrop-blur-sm border-r border-gray-200/50 transition-all duration-300 flex flex-col shadow-lg",
+        "h-screen bg-[#1A1F2C] border-r border-gray-800/50 transition-all duration-300 flex flex-col shadow-lg",
         collapsed ? "w-20" : "w-64"
       )}
     >
-      <div className="flex items-center justify-between p-6 border-b border-gray-200/50">
+      <div className="flex items-center justify-between p-6 border-b border-gray-800/50">
         {!collapsed && (
-          <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+          <h1 className="text-xl font-bold text-white">
             PitchPilot
           </h1>
         )}
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="p-2 hover:bg-gray-100/80 rounded-lg transition-colors"
+          className="p-2 hover:bg-gray-800/50 rounded-lg transition-colors"
           aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
-          <Menu size={20} className="text-primary/80" />
+          <Menu size={20} className="text-gray-400" />
         </button>
       </div>
       <nav className="flex-1 p-4">
@@ -40,14 +40,14 @@ const Sidebar = () => {
             <li key={item.label}>
               <a
                 href={item.href}
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100/80 transition-all duration-200 group"
+                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800/50 transition-all duration-200 group"
               >
                 <item.icon 
                   size={20} 
-                  className="text-primary/70 group-hover:text-primary transition-colors" 
+                  className="text-gray-400 group-hover:text-white transition-colors" 
                 />
                 {!collapsed && (
-                  <span className="text-gray-700 group-hover:text-primary/90 transition-colors">
+                  <span className="text-gray-400 group-hover:text-white transition-colors">
                     {item.label}
                   </span>
                 )}
