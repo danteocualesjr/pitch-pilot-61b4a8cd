@@ -1,6 +1,5 @@
-
 import { useState } from "react";
-import { BarChart, LineChart, PieChart, Smile, Meh, Frown } from "lucide-react";
+import { BarChart, LineChart, PieChart, Smile, Meh, Frown, FileText, LightbulbIcon, CheckSquare, MessageSquare, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   BarChart as RechartsBarChart,
@@ -26,7 +25,7 @@ const AnalysisVisualizations = ({
   data = null,
   isLoading = false,
 }: AnalysisVisualizationsProps) => {
-  const [activeChart, setActiveChart] = useState<"bar" | "pie" | "line" | "sentiment">("bar");
+  const [activeChart, setActiveChart] = useState<"bar" | "pie" | "line" | "sentiment" | "text">("bar");
   
   // Sample data - in a real app, this would come from the transcript analysis
   const sampleData = data || {
@@ -50,6 +49,61 @@ const AnalysisVisualizations = ({
       { name: "Client Speaking", value: 35 },
       { name: "Sales Rep Speaking", value: 65 },
     ],
+    textResults: {
+      context: "The salesperson, John from TechSolutions, is contacting a prospect to discuss customer support scaling solutions. The prospect's company has been growing rapidly and is facing challenges related to their support team's capacity.",
+      keyTopics: [
+        "Challenges in scaling customer support infrastructure.",
+        "Overwhelmed support team due to rapid company growth.",
+        "Current solutions: Hiring more staff and exploring ticketing systems.",
+        "Introduction of an AI-powered support solution specifically for customer support scenarios."
+      ],
+      customerObjections: [
+        "Skepticism regarding the effectiveness of AI solutions based on past experiences."
+      ],
+      recognizedQuestions: [
+        "'How is yours different?' (Prospect questioning the uniqueness and reliability of the offered AI solution.)"
+      ],
+      salesProcessStage: "The conversation is in the needs analysis and solution presentation stages. The salesperson is identifying the prospect's needs and challenges while presenting a tailored solution and addressing objections with an offer for a demo.",
+      recommendations: {
+        guidance: [
+          "Acknowledge the Objection: It's important to validate the prospect's past experiences with AI solutions to build trust.",
+          "Differentiate the Product: Emphasize unique features and customized implementation to meet their specific needs.",
+          "Offer Proof Points: Share relevant case studies or testimonials demonstrating success in similar industries.",
+          "Prompt for Next Steps: Encourage engagement with an offer for a demo to showcase the solution's capabilities."
+        ],
+        suggestedResponses: [
+          "Acknowledge and Validate: 'I completely understand your concerns. It's crucial for any solution to meet your expectations.'",
+          "Differentiate the Solution: 'Our AI is trained specifically with industry data, making it highly relevant to your challenges. Additionally, our customization ensures it directly supports your unique operations.'",
+          "Provide Supporting Evidence: 'In fact, one of our clients in a similar industry saw a 50% reduction in tickets and increased customer satisfaction scores within the first three months. I'd be happy to share more details if you're interested.'",
+          "Encourage Next Steps: 'Seeing is believing, right? I'd love to set up a quick demo so you can see how it functions and evaluate its fit for your team. Does that sound good?'"
+        ],
+        competitiveIntelligence: [
+          "Highlight any competitors' lack of industry-specific customization or support during the implementation phase.",
+          "Stress the importance of an ongoing partnership rather than a one-time setup, which might not be a focus for other solutions.",
+          "Compare resolution time improvements and scalability with industry benchmarks that your solution excels at."
+        ]
+      },
+      callSummary: {
+        participants: [
+          "Salesperson: John from TechSolutions",
+          "Prospect: [Prospect's Name] from [Prospect's Company]"
+        ],
+        date: "[Insert Date]",
+        keyDiscussionPoints: [
+          "Current Challenges: The prospect's support team is overwhelmed due to rapid growth. Existing solutions include hiring more staff, which is costly and time-consuming. Exploration of ticketing systems is underway but no decisions made yet.",
+          "Proposed Solution: An AI-powered support solution from TechSolutions that claims to reduce ticket resolution time by 40% and addresses 60% of routine inquiries.",
+          "Prospect Concerns: Skepticism about AI effectiveness based on past experiences. Inquiry about how TechSolutions' AI differs from others in the market.",
+          "Salesperson's Response: Emphasized industry-specific training of the AI. Mentioned a 4-week customization and implementation process. Offered a demo to demonstrate the solution in action."
+        ],
+        actionItems: [
+          "Demo Scheduling: Coordinate with [Prospect's Name] to schedule a demonstration of the AI solution. Ensure it's tailored to their industry and challenges.",
+          "Provide Testimonials/Case Studies: Send relevant case studies or testimonials showing success in similar industries to build trust and credibility.",
+          "Prepare Competitive Analysis: Share information on how TechSolutions' offering differs from competitors, emphasizing unique features and customization.",
+          "Follow-Up: Send a follow-up email recapping the call highlights, confirming the demo schedule, and attaching supporting materials.",
+          "Feedback Loop: After the demo, gather feedback from the prospect to address any further questions or concerns."
+        ]
+      }
+    }
   };
 
   const COLORS = ["#9b87f5", "#7E69AB", "#6E59A5", "#D6BCFA", "#E5DEFF"];
@@ -66,6 +120,176 @@ const AnalysisVisualizations = ({
     }
   };
 
+  const renderTextResults = () => {
+    return (
+      <div className="h-[500px] overflow-y-auto px-4 py-2 text-gray-700">
+        {/* Analysis Section */}
+        <div className="mb-8">
+          <div className="flex items-center gap-2 mb-4">
+            <Info size={20} className="text-gray-700" />
+            <h3 className="text-lg font-semibold text-gray-800">Analysis</h3>
+          </div>
+          
+          <div className="space-y-4 ml-6">
+            <div>
+              <h4 className="font-medium text-gray-800 mb-2">Context:</h4>
+              <p className="text-sm bg-gray-100 p-3 rounded-md">{sampleData.textResults.context}</p>
+            </div>
+            
+            <div>
+              <h4 className="font-medium text-gray-800 mb-2">Key Topics:</h4>
+              <ul className="space-y-1 text-sm">
+                {sampleData.textResults.keyTopics.map((topic, idx) => (
+                  <li key={idx} className="flex items-start">
+                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-gray-700 mt-1.5 mr-2"></span>
+                    <span>{topic}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-medium text-gray-800 mb-2">Customer Objections:</h4>
+              <ul className="space-y-1 text-sm">
+                {sampleData.textResults.customerObjections.map((objection, idx) => (
+                  <li key={idx} className="flex items-start">
+                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-gray-700 mt-1.5 mr-2"></span>
+                    <span>{objection}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-medium text-gray-800 mb-2">Recognized Questions:</h4>
+              <ul className="space-y-1 text-sm">
+                {sampleData.textResults.recognizedQuestions.map((question, idx) => (
+                  <li key={idx} className="flex items-start">
+                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-gray-700 mt-1.5 mr-2"></span>
+                    <span>{question}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-medium text-gray-800 mb-2">Sales Process Stage:</h4>
+              <p className="text-sm">{sampleData.textResults.salesProcessStage}</p>
+            </div>
+          </div>
+        </div>
+        
+        {/* Recommendations Section */}
+        <div className="mb-8">
+          <div className="flex items-center gap-2 mb-4">
+            <LightbulbIcon size={20} className="text-gray-700" />
+            <h3 className="text-lg font-semibold text-gray-800">Recommendations</h3>
+          </div>
+          
+          <div className="space-y-6 ml-6">
+            <div>
+              <h4 className="font-medium text-gray-800 mb-2">Real-Time Guidance:</h4>
+              <ol className="space-y-2 text-sm">
+                {sampleData.textResults.recommendations.guidance.map((guidance, idx) => {
+                  const [title, description] = guidance.split(":");
+                  return (
+                    <li key={idx} className="bg-gray-50 p-3 rounded-md">
+                      <span className="font-medium">{title}:</span> {description}
+                    </li>
+                  );
+                })}
+              </ol>
+            </div>
+            
+            <div>
+              <h4 className="font-medium text-gray-800 mb-2">Suggested Responses:</h4>
+              <div className="space-y-2 text-sm">
+                {sampleData.textResults.recommendations.suggestedResponses.map((response, idx) => {
+                  const [title, description] = response.split(":");
+                  return (
+                    <div key={idx} className="bg-gray-50 p-3 rounded-md">
+                      <span className="font-medium">{title}:</span> {description}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            
+            <div>
+              <h4 className="font-medium text-gray-800 mb-2">Relevant Competitive Intelligence:</h4>
+              <ul className="space-y-1 text-sm">
+                {sampleData.textResults.recommendations.competitiveIntelligence.map((intel, idx) => (
+                  <li key={idx} className="flex items-start">
+                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-gray-700 mt-1.5 mr-2"></span>
+                    <span>{intel}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        {/* Documentation Section */}
+        <div>
+          <div className="flex items-center gap-2 mb-4">
+            <FileText size={20} className="text-gray-700" />
+            <h3 className="text-lg font-semibold text-gray-800">Documentation</h3>
+          </div>
+          
+          <div className="space-y-4 ml-6">
+            <div>
+              <h4 className="font-medium text-gray-800 mb-2">Call Summary:</h4>
+              
+              <div className="bg-gray-50 p-4 rounded-md text-sm">
+                <div className="mb-3">
+                  <span className="font-medium">Participants:</span><br />
+                  {sampleData.textResults.callSummary.participants.map((participant, idx) => (
+                    <div key={idx} className="ml-4">{participant}</div>
+                  ))}
+                </div>
+                
+                <div className="mb-3">
+                  <span className="font-medium">Date:</span> {sampleData.textResults.callSummary.date}
+                </div>
+                
+                <div className="mb-3">
+                  <span className="font-medium">Key Discussion Points:</span>
+                  <ol className="ml-4 mt-1 space-y-2">
+                    {sampleData.textResults.callSummary.keyDiscussionPoints.map((point, idx) => {
+                      const [title, description] = point.split(":");
+                      return (
+                        <li key={idx}>
+                          <span className="font-medium">{title}:</span> {description}
+                        </li>
+                      );
+                    })}
+                  </ol>
+                </div>
+                
+                <div>
+                  <span className="font-medium">Action Items:</span>
+                  <ul className="ml-4 mt-1 space-y-1">
+                    {sampleData.textResults.callSummary.actionItems.map((item, idx) => {
+                      const [title, description] = item.split(":");
+                      return (
+                        <li key={idx} className="flex items-start">
+                          <span className="inline-block w-1.5 h-1.5 rounded-full bg-gray-700 mt-1.5 mr-2"></span>
+                          <span>
+                            <span className="font-medium">{title}:</span> {description}
+                          </span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   const renderActiveChart = () => {
     switch (activeChart) {
       case "bar":
@@ -80,7 +304,7 @@ const AnalysisVisualizations = ({
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
-                <Bar dataKey="value" fill="#9b87f5" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="value" fill="#333" radius={[4, 4, 0, 0]} />
               </RechartsBarChart>
             </ResponsiveContainer>
             <p className="text-center font-medium text-gray-700 mt-4">Key Topics Mentioned</p>
@@ -99,7 +323,7 @@ const AnalysisVisualizations = ({
                   labelLine={false}
                   label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
                   outerRadius={80}
-                  fill="#8884d8"
+                  fill="#333"
                   dataKey="value"
                 >
                   {sampleData.percentages.map((entry, index) => (
@@ -128,7 +352,7 @@ const AnalysisVisualizations = ({
                 <Line
                   type="monotone"
                   dataKey="value"
-                  stroke="#9b87f5"
+                  stroke="#333"
                   strokeWidth={2}
                   dot={{ r: 4 }}
                   activeDot={{ r: 6 }}
@@ -153,6 +377,9 @@ const AnalysisVisualizations = ({
           </div>
         );
       
+      case "text":
+        return renderTextResults();
+      
       default:
         return null;
     }
@@ -169,8 +396,8 @@ const AnalysisVisualizations = ({
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 space-y-6">
       <div>
-        <h2 className="text-xl font-semibold text-primary mb-4">Analysis Results</h2>
-        <div className="flex space-x-2 mb-6">
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">Analysis Results</h2>
+        <div className="flex flex-wrap gap-2 mb-6">
           <Button
             variant={activeChart === "bar" ? "default" : "outline"}
             size="sm"
@@ -206,6 +433,15 @@ const AnalysisVisualizations = ({
           >
             <Smile size={16} />
             Sentiment
+          </Button>
+          <Button
+            variant={activeChart === "text" ? "default" : "outline"}
+            size="sm"
+            onClick={() => setActiveChart("text")}
+            className="flex items-center gap-2"
+          >
+            <MessageSquare size={16} />
+            Detailed Analysis
           </Button>
         </div>
       </div>
