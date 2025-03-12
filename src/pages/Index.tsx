@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Paperclip } from "lucide-react";
 import AnalysisVisualizations from "@/components/AnalysisVisualizations";
+import { toast } from "sonner";
 
 const Index = () => {
   const [transcript, setTranscript] = useState("");
@@ -14,16 +15,30 @@ const Index = () => {
   const [files, setFiles] = useState<File[]>([]);
 
   const handleAnalyze = () => {
-    if (!transcript.trim()) return;
+    // Check if there's either transcript text or files to analyze
+    if (!transcript.trim() && files.length === 0) return;
     
     setIsAnalyzing(true);
+    
     // Simulate API call for analysis
     setTimeout(() => {
       setIsAnalyzing(false);
       setShowResults(true);
+      
+      // Show toast notification that analysis is complete
+      toast.success("Analysis complete", {
+        description: `Analyzed ${transcript.trim() ? "transcript" : ""} ${transcript.trim() && files.length > 0 ? "and " : ""} ${files.length > 0 ? `${files.length} file(s)` : ""}`,
+      });
     }, 1500);
     
-    console.log("Analyzing:", transcript);
+    // Log what's being analyzed
+    if (transcript.trim()) {
+      console.log("Analyzing transcript:", transcript);
+    }
+    
+    if (files.length > 0) {
+      console.log("Analyzing files:", files.map(f => f.name));
+    }
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -48,6 +63,10 @@ const Index = () => {
       const selectedFiles = Array.from(e.target.files);
       setFiles((prev) => [...prev, ...selectedFiles]);
     }
+  };
+
+  const handleRemoveFile = (indexToRemove: number) => {
+    setFiles((prev) => prev.filter((_, index) => index !== indexToRemove));
   };
 
   return (
@@ -109,6 +128,12 @@ const Index = () => {
                     <span className="text-gray-400">
                       {(file.size / 1024 / 1024).toFixed(2)} MB
                     </span>
+                    <button 
+                      onClick={() => handleRemoveFile(index)}
+                      className="text-gray-400 hover:text-red-500 transition-colors"
+                    >
+                      ×
+                    </button>
                   </div>
                 ))}
               </div>
@@ -116,7 +141,7 @@ const Index = () => {
             <Button
               onClick={handleAnalyze}
               className="bg-primary hover:bg-primary/90 text-white px-8 shadow-lg hover:shadow-xl transition-all duration-300"
-              disabled={isAnalyzing || !transcript.trim()}
+              disabled={isAnalyzing || (!transcript.trim() && files.length === 0)}
             >
               {isAnalyzing ? (
                 <span className="flex items-center gap-2">
