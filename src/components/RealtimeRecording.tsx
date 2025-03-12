@@ -60,27 +60,27 @@ const RealtimeRecording = ({ onTranscriptUpdate }: RealtimeRecordingProps) => {
         variant={isRecording ? "destructive" : "default"}
         className={`relative group transition-all duration-300 ${
           isRecording 
-            ? "bg-red-500/80 hover:bg-red-500 text-white shadow-lg" 
-            : "bg-[#403E43] hover:bg-[#403E43]/80 text-white shadow-lg border border-gray-700/50"
+            ? "bg-destructive hover:bg-destructive/90 text-white shadow-lg shadow-destructive/20" 
+            : "bg-primary/80 hover:bg-primary text-white shadow-lg shadow-primary/20"
         }`}
       >
         {isRecording ? (
           <>
             <MicOff className="mr-2 h-4 w-4" />
             Stop Recording
-            <AudioLines className="absolute -right-2 -top-2 text-red-400/80 animate-pulse" />
+            <AudioLines className="absolute -right-2 -top-2 text-white/80 animate-pulse" />
           </>
         ) : (
           <>
             <Mic className="mr-2 h-4 w-4" />
             <span>Start Recording</span>
-            <Sparkles className="absolute -right-2 -top-2 text-gray-400/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300" size={16} />
+            <Sparkles className="absolute -right-2 -top-2 text-white/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300" size={16} />
           </>
         )}
       </Button>
       {isRecording && (
-        <div className="flex items-center gap-2 text-sm text-gray-400 animate-pulse font-medium">
-          <AudioLines className="h-4 w-4 text-red-400" />
+        <div className="flex items-center gap-2 text-sm text-gray-700 animate-pulse font-medium">
+          <AudioLines className="h-4 w-4 text-destructive" />
           Listening...
         </div>
       )}
