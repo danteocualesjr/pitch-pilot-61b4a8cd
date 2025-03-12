@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import { Textarea } from "@/components/ui/textarea";
@@ -76,8 +77,11 @@ const Index = () => {
         <div className="max-w-4xl mx-auto space-y-8 animate-fade-in">
           <div className="text-center md:text-left">
             <h1 className="text-4xl font-bold text-primary mb-3">
-              Upload your sales calls or enable real-time conversation analysis for instant guidance
+              Sales Playbook Coach
             </h1>
+            <p className="text-lg text-gray-600 max-w-2xl">
+              Upload your sales calls or enable real-time conversation analysis for instant guidance
+            </p>
           </div>
 
           <div className="bg-white/70 backdrop-blur-md rounded-xl shadow-xl border border-gray-100/50 p-8 space-y-6 transition-all hover:shadow-2xl hover:bg-white/80">
