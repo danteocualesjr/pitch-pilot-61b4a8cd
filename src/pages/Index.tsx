@@ -71,12 +71,12 @@ const Index = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50 to-violet-50">
+    <div className="flex min-h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-slate-100">
       <Sidebar />
       <main className="flex-1 p-8">
         <div className="max-w-4xl mx-auto space-y-8 animate-fade-in">
           <div className="text-center md:text-left">
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 bg-clip-text text-transparent mb-3">
+            <h1 className="text-4xl font-bold text-primary mb-3">
               Sales Playbook Coach
             </h1>
             <p className="text-lg text-gray-600 max-w-2xl">
@@ -84,10 +84,10 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="bg-white/70 backdrop-blur-md rounded-xl shadow-xl border border-indigo-100/50 p-8 space-y-6 transition-all hover:shadow-2xl hover:bg-white/80">
+          <div className="bg-white/70 backdrop-blur-md rounded-xl shadow-xl border border-gray-100/50 p-8 space-y-6 transition-all hover:shadow-2xl hover:bg-white/80">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-semibold bg-gradient-to-r from-indigo-600 to-violet-500 bg-clip-text text-transparent flex items-center">
-                <Zap size={20} className="mr-2 text-indigo-500" />
+              <h2 className="text-xl font-semibold text-primary flex items-center">
+                <Zap size={20} className="mr-2 text-primary" />
                 Conversation Analysis
               </h2>
               <RealtimeRecording onTranscriptUpdate={handleTranscriptUpdate} />
@@ -146,7 +146,7 @@ const Index = () => {
 
             <Button
               onClick={handleAnalyze}
-              className="relative overflow-hidden bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white px-8 py-6 shadow-lg hover:shadow-xl transition-all duration-300 group rounded-xl w-full md:w-auto"
+              className="relative overflow-hidden bg-primary hover:bg-primary/90 text-white px-8 py-6 shadow-lg hover:shadow-xl transition-all duration-300 group rounded-xl w-full md:w-auto"
               disabled={isAnalyzing || (!transcript.trim() && files.length === 0)}
             >
               {isAnalyzing ? (

@@ -60,7 +60,7 @@ const RealtimeRecording = ({ onTranscriptUpdate }: RealtimeRecordingProps) => {
         variant={isRecording ? "destructive" : "default"}
         className={`relative group transition-all duration-300 ${
           isRecording 
-            ? "bg-primary/90 hover:bg-primary text-white shadow-lg shadow-primary/20" 
+            ? "bg-destructive hover:bg-destructive/90 text-white shadow-lg shadow-destructive/20" 
             : "bg-primary/80 hover:bg-primary text-white shadow-lg shadow-primary/20"
         }`}
       >
@@ -79,8 +79,8 @@ const RealtimeRecording = ({ onTranscriptUpdate }: RealtimeRecordingProps) => {
         )}
       </Button>
       {isRecording && (
-        <div className="flex items-center gap-2 text-sm text-primary animate-pulse font-medium">
-          <AudioLines className="h-4 w-4 text-primary" />
+        <div className="flex items-center gap-2 text-sm text-gray-700 animate-pulse font-medium">
+          <AudioLines className="h-4 w-4 text-destructive" />
           Listening...
         </div>
       )}
