@@ -77,7 +77,7 @@ const Index = () => {
         <div className="max-w-4xl mx-auto space-y-8 animate-fade-in">
           <div className="text-center md:text-left">
             <h1 className="text-4xl font-bold text-primary mb-3">
-              Sales Playbook Coach
+              PitchPilot AI, your Sales Playbook Coach.
             </h1>
             <p className="text-lg text-gray-600 max-w-2xl">
               Upload your sales calls or enable real-time conversation analysis for instant guidance
